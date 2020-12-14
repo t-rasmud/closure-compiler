@@ -218,7 +218,7 @@
           todir="${classes.dir}/com/google/javascript/jscomp/js" />
   </target>
 
-  <target name="check-nullness" description="check for null pointer dereferences" depends="clean,svnversion">
+  <target name="check-iteration" description="check for Illegal calls to Iterator.next" depends="clean,svnversion">
     <mkdir dir="${classes.dir}" />
     <!--<jsr308.javac srcdir="${gen.dir}"-->
            <!--destdir="${classes.dir}"-->
@@ -235,7 +235,7 @@
            destdir="${classes.dir}"
            excludes=".svn,**/jsonml/**,**/testing/**"
            debug="${javac.debug}">
-      <compilerarg line="-processor org.checkerframework.checker.nullness.NullnessChecker"/>
+      <compilerarg line="-processor org.checkerframework.checker.iteration.IterationChecker"/>
       <!-- optional, to not check uses of library methods:
         <compilerarg value="-AskipUses=^(java\.awt\.|javax\.swing\.)"/>
       -->
