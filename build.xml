@@ -43,6 +43,15 @@
   <property name="maven-repository-url" value="https://oss.sonatype.org/service/local/staging/deploy/maven2/" />
   <property name="maven-repository-id" value="sonatype-nexus-staging" />
 
+  <property environment="env"/>
+  <property name="checkerframework" value="${env.CHECKERFRAMEWORK}" />
+  <property name="cfJavac" value="javac"/>
+  <presetdef name="jsr308.javac">
+    <javac fork="yes" executable="${checkerframework}/checker/bin/${cfJavac}" >
+      <compilerarg value="-implicit:class"/>
+    </javac>
+  </presetdef>
+
   <property file="build.properties" />
 
   <!-- maven ant tasks -->
@@ -208,6 +217,55 @@
     <copy file="${src.dir}/com/google/javascript/jscomp/js/runtime_type_check.js"
           todir="${classes.dir}/com/google/javascript/jscomp/js" />
   </target>
+
+  <target name="check-nullness" description="check for null pointer dereferences" depends="clean,svnversion">
+    <mkdir dir="${classes.dir}" />
+    <!--<jsr308.javac srcdir="${gen.dir}"-->
+           <!--destdir="${classes.dir}"-->
+           <!--excludes=".svn"-->
+           <!--debug="${javac.debug}">-->
+      <!--<compilerarg line="-processor org.checkerframework.checker.iteration.IterationChecker"/>-->
+      <!--&lt;!&ndash; optional, to not check uses of library methods:-->
+        <!--<compilerarg value="-AskipUses=^(java\.awt\.|javax\.swing\.)"/>-->
+      <!--&ndash;&gt;-->
+      <!--<compilerarg line="-Xmaxerrs 10000"/>-->
+      <!--<classpath refid="srcclasspath.path" />-->
+    <!--</jsr308.javac>-->
+    <jsr308.javac srcdir="${src.dir}"
+           destdir="${classes.dir}"
+           excludes=".svn,**/jsonml/**,**/testing/**"
+           debug="${javac.debug}">
+      <compilerarg line="-processor org.checkerframework.checker.nullness.NullnessChecker"/>
+      <!-- optional, to not check uses of library methods:
+        <compilerarg value="-AskipUses=^(java\.awt\.|javax\.swing\.)"/>
+      -->
+      <compilerarg line="-Xmaxerrs 10000"/>
+      <classpath refid="srcclasspath.path" />
+    </jsr308.javac>
+
+    <!-- Move Messages.properties where ScriptRuntime.java expects it. -->
+    <mkdir dir="${classes.dir}/rhino_ast/java/com/google/javascript/rhino/" />
+    <copy file="${src.dir}/com/google/javascript/rhino/Messages.properties"
+          todir="${classes.dir}/rhino_ast/java/com/google/javascript/rhino/" />
+
+    <!-- Move ParserConfig.properties where ParserRunner.java expects it. -->
+    <copy file="${src.dir}/com/google/javascript/jscomp/parsing/ParserConfig.properties"
+          todir="${classes.dir}/com/google/javascript/jscomp/parsing" />
+
+    <propertyfile
+            file="${classes.dir}/com/google/javascript/jscomp/parsing/ParserConfig.properties"
+            comment="Parser properties">
+      <entry key="compiler.date" type="date" value="now"/>
+      <entry key="compiler.version" value="${build.svnVersion}"/>
+    </propertyfile>
+
+    <!-- Move runtime_type_check.js where RuntimeTypeCheck.java expects it. -->
+    <mkdir dir="${classes.dir}/com/google/javascript/jscomp/js" />
+    <copy file="${src.dir}/com/google/javascript/jscomp/js/runtime_type_check.js"
+          todir="${classes.dir}/com/google/javascript/jscomp/js" />
+  </target>
+
+
 
   <target name="jar-nodeps"
           depends="compile,pom"
