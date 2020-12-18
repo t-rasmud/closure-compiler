@@ -1,0 +1,84 @@
+Buildfile: /Users/rashmi/iteration-case-studies/closure-compiler/build.xml
+
+clean:
+   [delete] Deleting directory /Users/rashmi/iteration-case-studies/closure-compiler/build
+
+svnversion:
+
+check-iteration:
+    [mkdir] Created dir: /Users/rashmi/iteration-case-studies/closure-compiler/build/classes
+[jsr308.javac] /Users/rashmi/iteration-case-studies/closure-compiler/build.xml:226: warning: 'includeantruntime' was not set, defaulting to build.sysclasspath=last; set to false for repeatable builds
+[jsr308.javac] Compiling 4 source files to /Users/rashmi/iteration-case-studies/closure-compiler/build/classes
+[jsr308.javac] /Users/rashmi/iteration-case-studies/closure-compiler/build.xml:232: warning: 'includeantruntime' was not set, defaulting to build.sysclasspath=last; set to false for repeatable builds
+[jsr308.javac] Compiling 339 source files to /Users/rashmi/iteration-case-studies/closure-compiler/build/classes
+
+---------------------------- TRUE POSITIVE (KNOWN: dmmc-1023) ------------------------------
+[jsr308.javac] /Users/rashmi/iteration-case-studies/closure-compiler/src/com/google/javascript/jscomp/deps/SortedDependencies.java:174: error: [method.invocation.invalid] call to next() not allowed on the given receiver.
+[jsr308.javac]       symbols.add(cycle.get(i).getProvides().iterator().next());
+[jsr308.javac]                                                             ^
+[jsr308.javac]   found   : @UnknownHasNext Iterator
+[jsr308.javac]   required: @HasNext Iterator
+
+---------------------------- TRUE POSITIVE (KNOWN: tikanga-2) ------------------------------
+[jsr308.javac] /Users/rashmi/iteration-case-studies/closure-compiler/src/com/google/javascript/jscomp/JSModuleGraph.java:209: error: [method.invocation.invalid] call to next() not allowed on the given receiver.
+[jsr308.javac]     JSModule dep = iter.next();
+[jsr308.javac]                             ^
+[jsr308.javac]   found   : @UnknownHasNext Iterator
+[jsr308.javac]   required: @HasNext Iterator
+
+---------------------------- FALSE POSITIVE ------------------------------
+[jsr308.javac] /Users/rashmi/iteration-case-studies/closure-compiler/src/com/google/javascript/rhino/jstype/UnionTypeBuilder.java:173: error: [method.invocation.invalid] call to next() not allowed on the given receiver.
+[jsr308.javac]         return alternates.iterator().next();
+[jsr308.javac]                                          ^
+[jsr308.javac]   found   : @UnknownHasNext Iterator
+[jsr308.javac]   required: @HasNext Iterator
+
+---------------------------- TRUE POSITIVE (NEW) ------------------------------
+[jsr308.javac] /Users/rashmi/iteration-case-studies/closure-compiler/src/com/google/javascript/jscomp/graph/LinkedDirectedGraph.java:397: error: [method.invocation.invalid] call to next() not allowed on the given receiver.
+[jsr308.javac]         DiGraphEdge<N, E> s = curIterator.next();
+[jsr308.javac]                                               ^
+[jsr308.javac]   found   : @UnknownHasNext Iterator
+[jsr308.javac]   required: @HasNext Iterator
+
+---------------------------- TRUE POSITIVE (KNOWN: tikanga-6) ------------------------------
+[jsr308.javac] /Users/rashmi/iteration-case-studies/closure-compiler/src/com/google/javascript/jscomp/TypeCheck.java:1401: error: [method.invocation.invalid] call to next() not allowed on the given receiver.
+[jsr308.javac]     arguments.next(); // skip the function name
+[jsr308.javac]                   ^
+[jsr308.javac]   found   : @UnknownHasNext Iterator
+[jsr308.javac]   required: @HasNext Iterator
+
+---------------------------- FALSE POSITIVE (Also reported by MuDetect) ------------------------------
+[jsr308.javac] /Users/rashmi/iteration-case-studies/closure-compiler/src/com/google/javascript/jscomp/SimpleDefinitionFinder.java:282: error: [method.invocation.invalid] call to next() not allowed on the given receiver.
+[jsr308.javac]       Definition first = defs.iterator().next();
+[jsr308.javac]                                              ^
+[jsr308.javac]   found   : @UnknownHasNext Iterator
+[jsr308.javac]   required: @HasNext Iterator
+
+---------------------------- TRUE POSITIVE (KNOWN: mudetect-17) ------------------------------
+[jsr308.javac] /Users/rashmi/iteration-case-studies/closure-compiler/src/com/google/javascript/jscomp/TightenTypes.java:875: error: [method.invocation.invalid] call to next() not allowed on the given receiver.
+[jsr308.javac]         argumentIter.next(); // Skip the function name.
+[jsr308.javac]                          ^
+[jsr308.javac]   found   : @UnknownHasNext Iterator
+[jsr308.javac]   required: @HasNext Iterator
+
+---------------------------- TRUE POSITIVE (NEW) ------------------------------
+[jsr308.javac] /Users/rashmi/iteration-case-studies/closure-compiler/src/com/google/javascript/jscomp/ReplaceMessages.java:271: error: [argument.type.incompatible] incompatible argument for parameter parts of constructStringExprNode.
+[jsr308.javac]     return constructStringExprNode(message.parts().iterator(), objLitNode);
+[jsr308.javac]                                                            ^
+[jsr308.javac]   found   : @UnknownHasNext Iterator<@UnknownHasNext CharSequence>
+[jsr308.javac]   required: @HasNext Iterator<@UnknownHasNext CharSequence>
+
+---------------------------- TRUE POSITIVE (NEW) ------------------------------
+[jsr308.javac] /Users/rashmi/iteration-case-studies/closure-compiler/src/com/google/javascript/jscomp/graph/LinkedUndirectedGraph.java:333: error: [method.invocation.invalid] call to next() not allowed on the given receiver.
+[jsr308.javac]         UndiGraphEdge<N, E> edge = edgeIterator.next();
+[jsr308.javac]                                                     ^
+[jsr308.javac]   found   : @UnknownHasNext Iterator
+[jsr308.javac]   required: @HasNext Iterator
+[jsr308.javac] Note: Some input files use or override a deprecated API.
+[jsr308.javac] Note: Recompile with -Xlint:deprecation for details.
+[jsr308.javac] 9 errors
+
+BUILD FAILED
+/Users/rashmi/iteration-case-studies/closure-compiler/build.xml:232: Compile failed; see the compiler error output for details.
+
+Total time: 1 minute 19 seconds

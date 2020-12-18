@@ -22,6 +22,8 @@ import com.google.javascript.rhino.Token;
 
 import java.util.Iterator;
 
+import org.checkerframework.checker.iteration.qual.HasNext;
+
 /**
  * ReplaceMessages replaces user-visible messages with alternatives.
  * It uses Google specific JsMessageVisitor implementation.
@@ -176,7 +178,7 @@ class ReplaceMessages extends JsMessageVisitor {
    *   placeholder reference that does not correspond to a valid argument in
    *   the arg list
    */
-  private Node constructAddOrStringNode(Iterator<CharSequence> partsIterator,
+  private Node constructAddOrStringNode(@HasNext Iterator<CharSequence> partsIterator,
                                         Node argListNode)
       throws MalformedException {
     CharSequence part = partsIterator.next();
@@ -282,7 +284,7 @@ class ReplaceMessages extends JsMessageVisitor {
    * @throws MalformedException if {@code parts} contains a placeholder
    *   reference that does not correspond to a valid placeholder name
    */
-  private Node constructStringExprNode(Iterator<CharSequence> parts,
+  private Node constructStringExprNode(@HasNext Iterator<CharSequence> parts,
       Node objLitNode) throws MalformedException {
 
     CharSequence part = parts.next();

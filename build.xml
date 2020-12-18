@@ -220,17 +220,12 @@
 
   <target name="check-iteration" description="check for Illegal calls to Iterator.next" depends="clean,svnversion">
     <mkdir dir="${classes.dir}" />
-    <!--<jsr308.javac srcdir="${gen.dir}"-->
-           <!--destdir="${classes.dir}"-->
-           <!--excludes=".svn"-->
-           <!--debug="${javac.debug}">-->
-      <!--<compilerarg line="-processor org.checkerframework.checker.iteration.IterationChecker"/>-->
-      <!--&lt;!&ndash; optional, to not check uses of library methods:-->
-        <!--<compilerarg value="-AskipUses=^(java\.awt\.|javax\.swing\.)"/>-->
-      <!--&ndash;&gt;-->
-      <!--<compilerarg line="-Xmaxerrs 10000"/>-->
-      <!--<classpath refid="srcclasspath.path" />-->
-    <!--</jsr308.javac>-->
+    <jsr308.javac srcdir="${gen.dir}"
+           destdir="${classes.dir}"
+           excludes=".svn"
+           debug="${javac.debug}">
+      <classpath refid="srcclasspath.path" />
+    </jsr308.javac>
     <jsr308.javac srcdir="${src.dir}"
            destdir="${classes.dir}"
            excludes=".svn,**/jsonml/**,**/testing/**"
@@ -239,6 +234,7 @@
       <!-- optional, to not check uses of library methods:
         <compilerarg value="-AskipUses=^(java\.awt\.|javax\.swing\.)"/>
       -->
+      <compilerarg value="-AsuppressWarnings=contracts.conditional.postcondition.not.satisfied"/>
       <compilerarg line="-Xmaxerrs 10000"/>
       <classpath refid="srcclasspath.path" />
     </jsr308.javac>
@@ -461,6 +457,24 @@
            debug="${javac.debug}">
       <classpath refid="jsonml-classpath.path" />
     </javac>
+  </target>
+
+  <target name="check-iteration-jsonml"
+          description="check for Illegal calls to Iterator.next"
+          depends="clean, compile">
+    <mkdir dir="${jsonml-classes.dir}" />
+    <jsr308.javac srcdir="${jsonml.dir}"
+           destdir="${jsonml-classes.dir}"
+           excludes=".svn"
+           debug="${javac.debug}">
+      <compilerarg line="-processor org.checkerframework.checker.iteration.IterationChecker"/>
+      <!-- optional, to not check uses of library methods:
+        <compilerarg value="-AskipUses=^(java\.awt\.|javax\.swing\.)"/>
+      -->
+      <compilerarg value="-AsuppressWarnings=contracts.conditional.postcondition.not.satisfied"/>
+      <compilerarg line="-Xmaxerrs 10000"/>
+      <classpath refid="jsonml-classpath.path" />
+    </jsr308.javac>
   </target>
 
    <target name="jsonml-jar"
