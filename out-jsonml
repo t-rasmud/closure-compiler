@@ -22,24 +22,23 @@ check-iteration-jsonml:
     [mkdir] Created dir: /Users/rashmi/iteration-case-studies/closure-compiler/build/jsonml-classes
 [jsr308.javac] /Users/rashmi/iteration-case-studies/closure-compiler/build.xml:469: warning: 'includeantruntime' was not set, defaulting to build.sysclasspath=last; set to false for repeatable builds
 [jsr308.javac] Compiling 13 source files to /Users/rashmi/iteration-case-studies/closure-compiler/build/jsonml-classes
+
+--------------------------- FALSE POSITIVE --------------------------
 [jsr308.javac] /Users/rashmi/iteration-case-studies/closure-compiler/src/com/google/javascript/jscomp/jsonml/JsonMLUtil.java:234: error: [method.invocation.invalid] call to next() not allowed on the given receiver.
 [jsr308.javac]         if (!compareElements(itA.next(), itB.next())) {
 [jsr308.javac]                                                  ^
 [jsr308.javac]   found   : @UnknownHasNext Iterator
 [jsr308.javac]   required: @HasNext Iterator
-[jsr308.javac] /Users/rashmi/iteration-case-studies/closure-compiler/src/com/google/javascript/jscomp/jsonml/Writer.java:320: error: [method.invocation.invalid] call to next() not allowed on the given receiver.
-[jsr308.javac]       processNode(it.next(), element);
-[jsr308.javac]                          ^
-[jsr308.javac]   found   : @UnknownHasNext Iterator
-[jsr308.javac]   required: @HasNext Iterator
+
+--------------------------- TRUE POSITIVE (KNOWN: mudetect-12) --------------------------
 [jsr308.javac] /Users/rashmi/iteration-case-studies/closure-compiler/src/com/google/javascript/jscomp/jsonml/Writer.java:345: error: [method.invocation.invalid] call to next() not allowed on the given receiver.
 [jsr308.javac]     Node child = it.next();
 [jsr308.javac]                         ^
 [jsr308.javac]   found   : @UnknownHasNext Iterator
 [jsr308.javac]   required: @HasNext Iterator
-[jsr308.javac] 3 errors
+[jsr308.javac] 2 errors
 
 BUILD FAILED
 /Users/rashmi/iteration-case-studies/closure-compiler/build.xml:469: Compile failed; see the compiler error output for details.
 
-Total time: 13 seconds
+Total time: 14 seconds

@@ -39,8 +39,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.checkerframework.dataflow.qual.SideEffectFree;
-
 /**
  * A {@link JSModule} dependency graph that assigns a depth to each module and
  * can answer depth-related queries about them. For the purposes of this class,
@@ -202,7 +200,6 @@ public class JSModuleGraph {
   }
 
   /** Returns the deepest common dependency of the given modules. */
-  @SideEffectFree
   public JSModule getDeepestCommonDependencyInclusive(
       Collection<JSModule> modules) {
     Iterator<JSModule> iter = modules.iterator();

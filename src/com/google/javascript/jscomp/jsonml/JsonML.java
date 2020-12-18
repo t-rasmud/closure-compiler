@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.checkerframework.dataflow.qual.SideEffectsOnly;
+
 /**
  * Class which represents JsonML element according to the specification at
  * "http://code.google.com/p/es-lab/wiki/JsonMLASTFormat"
@@ -85,6 +87,7 @@ public class JsonML {
    * Appends a given child element to the list of children.
    * @param element JsonML element to append
    */
+  @SideEffectsOnly("this")
   public void appendChild(JsonML element) {
     children.add(element);
   }

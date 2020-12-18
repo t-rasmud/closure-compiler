@@ -53,8 +53,6 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import org.checkerframework.dataflow.qual.SideEffectFree;
-
 /**
  * This class implements the root of the intermediate representation.
  *
@@ -1917,7 +1915,6 @@ public class Node implements Cloneable, Serializable {
   //==========================================================================
   // Custom annotations
 
-  @SideEffectFree
   public JSType getJSType() {
       return jsType;
   }
@@ -1985,7 +1982,6 @@ public class Node implements Cloneable, Serializable {
    * method's return value is meaningful only on {@link Token#NAME} nodes
    * used to define a {@link Token#FUNCTION}'s argument list.
    */
-  @SideEffectFree
   public boolean isVarArgs() {
     return getBooleanProp(VAR_ARGS_NAME);
   }
