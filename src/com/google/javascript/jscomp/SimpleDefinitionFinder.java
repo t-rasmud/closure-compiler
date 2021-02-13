@@ -33,6 +33,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.checkerframework.checker.nonempty.qual.NonEmpty;
+
 /**
  * Simple name-based definition gatherer that implements
  * {@link DefinitionProvider}.
@@ -76,7 +78,8 @@ class SimpleDefinitionFinder implements CompilerPass, DefinitionProvider {
   }
 
   @Override
-  public Collection<Definition> getDefinitionsReferencedAt(Node useSite) {
+  @SuppressWarnings("nonempty:return.type.incompatible") // This warning is issued on `return null` statements (not on return defs)
+  public @NonEmpty Collection<Definition> getDefinitionsReferencedAt(Node useSite) {
     if (definitionSiteMap.containsKey(useSite)) {
       return null;
     }
