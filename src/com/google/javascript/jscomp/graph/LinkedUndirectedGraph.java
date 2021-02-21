@@ -28,6 +28,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.checkerframework.checker.iteration.qual.HasNext;
+
 /**
  * An undirected graph using linked list within nodes to store edge
  * information.
@@ -329,7 +331,7 @@ public class LinkedUndirectedGraph<N, E>
       }
 
       @Override
-      public GraphNode<N, E> next() {
+      public GraphNode<N, E> next(@HasNext NeighborIterator this) {
         UndiGraphEdge<N, E> edge = edgeIterator.next();
         if (edge.getNodeA() == LinkedUndirectedGraphNode.this) {
           return edge.getNodeB();
