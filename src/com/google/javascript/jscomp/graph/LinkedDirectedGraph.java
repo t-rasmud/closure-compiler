@@ -28,6 +28,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.checkerframework.checker.iteration.qual.HasNext;
+
 /**
  * A directed graph using linked list within nodes to store edge information.
  * <p>
@@ -391,7 +393,7 @@ public class LinkedDirectedGraph<N, E>
       }
 
       @Override
-      public GraphNode<N, E> next() {
+      public GraphNode<N, E> next(@HasNext NeighborIterator this) {
         boolean isOut = !in.hasNext();
         Iterator<DiGraphEdge<N, E>> curIterator =  isOut ? out : in;
         DiGraphEdge<N, E> s = curIterator.next();
